@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Client</title>
+</head>
+
+<style>
+    .user_request{
+        background-color: yellow;
+        padding: 10px;
+        color : red ;
+        border: 2px solid red;
+        margin: 10px;
+    }
+
+    .coolie_display {
+        padding: 10px;
+        margin: 10px;
+        color : red ;
+        border : 2px solid blue; 
+    }
+</style>
+
+
+
+<body>
+
+    <div class="user_request" id="request_panel">
+
+        This is For User 
+
+    </div>
+
+
+
+    <button id="request" onclick="sendRequest()">
+        Send Request
+    </button>
+    <h1>Socket.IO Frontend</h1>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script>
+
+
+
+async function distance(lat1, lon1, lat2, lon2) {
+    let dis
+        const apiKey = 'c74bd66bef4d48e5bf4dc4217b2a50fd';
+        // const coordinates = `${lat1},${lon1}|${lat2},${lon2}`; // Example coordinates
+        const origin = `${lat1},${lon1}`
+        const destination = `${lat2},${lon2}`
+        const profile = 'driving-car';
+        const url = `https://api.geoapify.com/v1/routing?waypoints=${origin}|${destination}&mode=drive&apiKey=${apiKey}`;
+
+      await  fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // Parse the response as JSON
+            })
+            .then(data => {
+                 dis = data.features[0].properties.distance; // Distance in meters
+                console.log(`Distance: ${dis} meters`);
+                
+            })
+            .catch(error => {
+                console.error('Error fetching distance:', error);
+            });
+
+        return dis
+
+    }
+
+
+    const getLocation = async () => {
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        resolve({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                        });
+                    },
+                    (error) => reject(error)
+                );
+            } else {
+                reject(new Error("Geolocation is not supported by this browser."));
+            }
+        });
+    };
+
+
+    
+
+        let socket = ""
+
+        async function login() {
+              await  fetch("http://localhost:5000/user/login", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        mobile: "123456789",
+                        password: "1234",
+                    }),
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {                        
+                        console.log(data);
+                        return data;
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            }
+
+
+
+        async function loginHelper (){
+
+            await login()
+
+            console.log("login success");
+
+
+            console.log(document.cookie);
+            
+     
+            
+
+
+                 socket = io('http://localhost:5000', {
+                    withCredentials: true ,
+                    query:{
+                        type : 'user'
+                    }
+            });
+
+
+            
+            
+
+        }    
+loginHelper()
+
+        
+
+        function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+
+        
+
+        const sendRequest = async ()=>{
+        
+       const requestPanel =  document.getElementById('request_panel')
+       
+       requestPanel.innerHTML = "Your Request is pending"
+          const {latitude ,longitude} =  await getLocation()
+
+          console.log(latitude , longitude);
+            
+            if(socket) {
+                socket.emit('request', {location : "Kalupur station" , latitude : latitude ,longitude : longitude , userId : '678bde997d25ae2cd3c2904d' ,  })
+
+
+               let requestTime = setTimeout(() => {
+
+                    // socket.to(requestedUser.socketId).emit('cancelled', 'Sorry ! No Coolie Found ')
+                    requestPanel.innerHTML = "Sorry No coolies found at the moment"
+                    console.log("request canceled");
+
+
+                }, 10000)
+
+
+                socket.on('requestAccepted' , async (data)=>{
+                    await clearTimeout(requestTime)
+                    requestPanel.innerHTML = `
+
+                    <h1>Your coolie is reaching you</h1>
+                  Coolie Name : ${ data.coolieName } <br>
+                    mno : ${data.mobile} <br>
+
+                    `
+                   
+                })
+
+
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>

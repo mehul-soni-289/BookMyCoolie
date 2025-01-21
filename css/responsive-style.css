@@ -1,0 +1,119 @@
+@media(max-width : 1200px) {
+h1 {
+        font-size: 2.1875rem;
+    }
+
+    h2 {
+        font-size: 1.875rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    h4 {
+        font-size: 1.125rem;
+        line-height: 2rem;
+    }
+
+    p,
+    a {
+        font-size: .875rem;
+        line-height: 1.2rem;
+    }
+
+    .main-btn {
+        padding: .5rem .9375rem;
+    }
+
+    .wrapper {
+        padding-top: 4.25rem;
+        padding-bottom: 3.25rem;
+    }
+
+    /* navbar design */
+
+    .navigation-wrap .navbar-brand img {
+        width: 6.25rem;
+    }
+
+    .navbar-expand-lg .navbar-nav .nav-link {
+        font-size: .875rem;
+    }
+
+
+}
+
+@media (max-width : 992px) {
+
+
+ p,a {
+        font-size: .75rem;
+    }
+
+    /* navbar  */
+    .header-top {
+        display: none;
+    }
+
+    .navbar .navbar-toggler {
+        color: var(--text-white);
+    }
+
+    .navbar .main-btn {
+        margin: .625rem 0;
+    }
+
+    .navigation-wrap {
+        text-align: center;
+        background-color: var(--black-color);
+    }
+
+    .navigation-wrap .nav-link {
+        line-height: 1.875rem;
+    }
+
+    /* Banner Design */
+    .top-banner {
+        padding: 7.375rem 0 4.375rem;
+    }
+
+
+
+}
+
+@media (max-width: 767px) {
+
+    /* custom css */
+    h1 {
+        font-size: 1.5625rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    h3 {
+        font-size: 1.125rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    span {
+        font-size: .875rem;
+    }
+
+    .main-btn {
+        font-size: .75rem;
+        line-height: 1rem;
+        padding: .5rem .625rem;
+    }
+
+    .wrapper {
+        padding-top: 3.25rem;
+        padding-bottom: 2.25rem;
+    }
+
+}

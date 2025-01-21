@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO CXoolies</title>
+</head>
+
+<style>
+
+    .coolie_display {
+        padding: 10px;
+        margin: 10px;
+        color: red;
+        border: 2px solid blue;
+    }
+</style>
+
+
+
+<body>
+
+
+
+
+    <h1>For Coolie</h1>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script>
+
+
+
+        async function distance(lat1, lon1, lat2, lon2) {
+            let dis
+            const apiKey = 'c74bd66bef4d48e5bf4dc4217b2a50fd';
+            // const coordinates = `${lat1},${lon1}|${lat2},${lon2}`; // Example coordinates
+            const origin = `${lat1},${lon1}`
+            const destination = `${lat2},${lon2}`
+            const profile = 'driving-car';
+            const url = `https://api.geoapify.com/v1/routing?waypoints=${origin}|${destination}&mode=drive&apiKey=${apiKey}`;
+
+            await fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // Parse the response as JSON
+                })
+                .then(data => {
+                    dis = data.features[0].properties.distance; // Distance in meters
+                    console.log(`Distance: ${dis} meters`);
+
+                })
+                .catch(error => {
+                    console.error('Error fetching distance:', error);
+                });
+
+            return dis
+
+        }
+
+
+        const getLocation = async () => {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                            });
+                        },
+                        (error) => reject(error)
+                    );
+                } else {
+                    reject(new Error("Geolocation is not supported by this browser."));
+                }
+            });
+        };
+
+
+
+
+        let socket = ""
+
+        async function login() {
+            await fetch("http://localhost:5000/coolie/login", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    mobile: "1234567890",
+                    password: "123",
+                }),
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    return data;
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+
+
+
+        async function loginHelper() {
+
+            await login()
+
+
+
+
+
+            socket = io('http://localhost:5000', {
+                withCredentials: true ,
+                query: {
+                    type: 'coolie'
+                }
+            });
+
+
+
+            socket.on('userRequest', async (data) => {
+
+                const coolieLocation = await getLocation()
+
+
+                console.log(coolieLocation.latitude, coolieLocation.longitude, data.latitude,
+                    data.longitude);
+
+
+                const dis = await distance(data.latitude,
+                    data.longitude, coolieLocation.latitude, coolieLocation.longitude
+                )
+
+                console.log('calculated distance is : ', dis);
+
+
+                if (dis <= 1500) {
+                    let e = document.createElement('div')
+                    e.className = 'coolie_display'
+                    e.innerHTML = `name : ${data.userName} <br> location : ${data.location} <br>  lattitude : ${data.latitude}  longitude : ${data.longitude} <br> <button onclick = "accept(${data.mobile})"> Accept </button> `
+                    document.body.appendChild(e)
+                }
+
+
+            })
+
+
+        }
+        loginHelper()
+
+
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function accept(userId){
+
+            socket.emit('requestAccepted' , {userId : userId })
+
+                }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    
+    , initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            color: orange;
+            background-color: black;
+        }
+
+        .booking-form{
+            width: 50vh;
+        }
+
+        .booking-form input {
+            border: 2px solid red;
+            border-radius: 40px;
+            height: 30px;
+            width: 100%;
+            padding: 0.3125rem;
+            padding-left: 0.625rem;
+            margin: 0.3125rem;
+
+        }
+
+        .booking-form input:hover {
+            background-color: pink;
+        }
+
+        .booking-form div {
+            margin: 10px;
+        }
+
+        .heading {
+            color: orange;
+            text-align: center;
+
+        }
+                .btn {
+            width: 100%;
+            text-align: center;
+        }
+         #sub-btn{
+            background-color: red;
+            color: white;
+            border: none;
+            font-size : 20px;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius : 2.5rem;
+        } 
+        #sub-btn:hover{
+            background-color: orange;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="booking-form">
+
+        <div class="heading">
+            <h1>Booking Data</h1>
+        </div>
+
+
+        <form action="" method="POST" class="booking-form">
+
+            <div class="location">
+
+                <label for="location">Provide Your Location:</label>
+                <br>
+
+                <input type="text" name="location" id="location" placeholder="describe location">
+
+
+            </div>
+
+
+
+            <div class="name">
+                <label for="name"> Your Name:</label>
+                <br>
+                <input type="text" name="name" id="name" placeholder="your name">
+
+            </div>
+
+            <div class="mobile">
+
+                <label for="mobile">Mobile:</label>
+                <br>
+                <input type="text" name="mobile" id="mobile" placeholder="mobile no">
+
+
+
+            </div>
+            <div class="time">
+                <label for="time">Estimate Time:</label>
+                <br>
+                <input type="text" name="time" id="time" placeholder="estimate shopping">
+            </div>
+
+            <div class="btn">
+                <button type="submit" id="sub-btn">Book Coolie</button>
+            </div>
+
+    </div>
+
+
+    </form>
+
+
+</body>
+
+</html>

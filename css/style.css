@@ -1,0 +1,278 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
+*{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+:root{
+    --primary-color : #ffa323 ;
+    --secondary-color : #f41f31;
+    --white-color : #fff ; 
+    --black-color :#0a0a0a ;
+
+    --text-primary : #ffa323 ;
+    --text-secodary : #f41f31;
+    --text-white : #fff ; 
+    --text-black :#0a0a0a ;
+    --text-color : #545454;
+    --text-gray : #aba8b0;
+    --text-gray-light : #484848;
+
+    --primary-font : "Poppins", sans-serif  ; 
+    --secondary-font : "Nunito Sans"  , sans-serif ;
+
+}
+
+
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+ul {
+    margin: 0;
+    padding : 0 
+}
+
+html {
+    scroll-behavior: smooth;
+
+}
+body {
+    background-color: black;
+    font-family: var(--primary-font);
+    font-size : 100% ; 
+    font-weight: 400;
+}
+
+
+
+h1{
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: var(--text-white);
+    text-transform: capitalize;
+}
+h2{
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-white);
+    text-transform: capitalize;
+}
+h3{
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-white);
+    text-transform: capitalize;
+}
+h4{
+    font-weight: 600;
+    line-height: 2.5rem;
+    color: var(--text-gray);
+    max-width: 75%;
+}
+p{
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 400;
+    line-height: 1.75rem;
+    letter-spacing: 0.0625rem;
+    margin-bottom: 0;
+    font-family: var(--secondary-font);
+}
+span {
+    display: block;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: var(--secondary-font);
+    color :var(--text-primary) ;
+    margin-bottom: 1.0714rem;
+    position: relative;
+}
+
+span:after {
+    position : absolute  ; 
+    left : 0 ; 
+    bottom : -0.1429rem ; 
+    content : '' ; 
+    background: var(--secondary-color);
+    width: 2rem;
+    height: 0.1429rem;
+}
+
+.main-btn {
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1.8571rem;
+  font-weight: 400;
+  border-radius: 0.3571rem;
+  padding: 0.7143rem 1.4286rem;
+  text-align: center;
+  border: 0.1429rem solid transparent;
+  position: relative;
+  z-index: 1;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.main-btn:after{
+    position: absolute;
+    top:0 ;
+    left: 0;
+    content: "";
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+    transition: 0.4s;
+}
+
+
+.style-1{
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+.style-1:after{
+    top : -0.1429rem ; 
+    left : -0.1429rem ; 
+    width: calc(100% + 0.2875rem);
+    height: 0;
+    background: var(--primary-color);
+    border-radius: 0.3571rem;
+}
+
+.main-btn:hover:after{
+visibility: visible;
+opacity: 1;
+}
+
+.style-1:hover::after{
+    height: calc(100% + 0.2857rem);
+}
+
+.wrapper{
+    padding-top: 6.25rem;
+    padding-bottom: 6.25rem;
+}
+
+
+.header-wrap {
+    position: fixed;
+    top: 0;
+    left : 0 ;
+    width: 100%;
+    z-index:9;
+    transition: all 0.3s ease-out;
+}
+
+.header-wrap .container {
+border-bottom: 0.0714rem dashed var(--text-gray-light);
+padding: 1rem 0;
+
+}
+
+.navigation-wrap .nav-item{
+    padding : 0 0.625rem ; 
+    transition: all 200ms linear;
+}
+
+
+.navbar-toggler:focus {
+    outline: unset;
+    border: unset;
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+   color: var(--text-white);
+}
+
+.navbar-brand{
+    color: var(--text-white);
+}
+
+.navigation-wrap .nav-link {
+font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--text-white);
+    letter-spacing: 0.0625rem;
+
+}
+
+.navigation-wrap .nav-link:hover{
+    color : var(--text-primary);
+}
+
+.navigation-wrap.scroll-on{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background:var(--black-color);
+    box-shadow: 0 0.125rem 1.75rem 0 rgb(0,0,0,0.09 );
+    transition: all 0.15s ease-in-out 0s;
+
+}   
+
+
+
+/* Top banner */
+
+.top-banner{
+    width: 100%;
+    background-color: #0a0a0a;
+    background-image: url('../images/img/luggage.png');
+    background-size: 500px;
+    background-repeat: no-repeat;
+    background-position: 80% ;
+    padding: 17.8571rem 0  9.375rem;
+    border-bottom: 0.0714rem dashed var(--text-gray-light);
+      
+
+}
+
+.shopping-section {
+    border-bottom: 0.0714rem dashed var(--text-gray-light);
+  
+
+}
+
+.traveling-section {
+    color : var(--text-white);
+    background-color: var(--black-color);
+    border-bottom: 0.0714rem dashed var(--text-gray-light);
+    
+   
+}
+.traveling-section h2,p {
+color: var(--text-white);
+
+}
+
+.bookings{
+    /* border: 2px solid red; */
+    width: 100%;
+    height:80vh;
+        background-color: #0a0a0a;
+        /* background-image: url('../images/img/luggage.png'); */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+        
+        
+}
+.empty{
+    text-align: center;
+  /* border: 2px solid red; */
+}
